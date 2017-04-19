@@ -7,6 +7,9 @@ vagrant environment.
 The disks attached are:
 
 10g  sda
+
 200m sdb
+
 100m sdc
+
 50m  sdd
