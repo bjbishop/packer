@@ -1,8 +1,8 @@
 #!/bin/bash
 
-function pearson_sudo() {
+function vagrant_sudo() {
     echo 'vagrant' | sudo -S sh -c "$*"
 }
 
-pearson_sudo "yum update -y kernel kernel-firmware libstdc++"
-pearson_sudo "reboot"
+vagrant_sudo "yum update -y kernel kernel-firmware libstdc++"
+vagrant_sudo "reboot"
