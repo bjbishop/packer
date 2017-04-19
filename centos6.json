@@ -1,0 +1,46 @@
+{
+    "builders": [
+	{
+	    "type": "virtualbox-iso",
+	    "guest_os_type": "RedHat_64",
+	    "iso_url": "http://cosmos.illinois.edu/pub/centos/6.8/isos/x86_64/CentOS-6.8-x86_64-minimal.iso",
+	    "iso_checksum": "ec49c297d484b9da0787e5944edc38f7c70f21c0f6a60178d8e9a8926d1949f4",
+	    "iso_checksum_type": "sha256",
+	    "ssh_username": "vagrant",
+	    "ssh_password": "vagrant",
+	    "guest_additions_mode": "upload",
+	    "disk_size": 10000,
+	    "shutdown_command": "echo '/sbin/halt -h -p' > /tmp/shutdown.sh; echo 'vagrant'|sudo -S sh '/tmp/shutdown.sh'",
+	    "http_directory": ".",
+	    "ssh_wait_timeout": "10000s",
+	    "headless": true,
+	    "keep_registered": false,
+	    "boot_wait": "5s",
+	    "boot_command": [
+		"<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"
+	    ],
+	    "vboxmanage": [
+		["storagectl", "{{.Name}}", "--name", "SATA", "--add", "sata", "--portcount", "6"],
+		["modifyvm", "{{.Name}}", "--cpus", "4"],
+		["modifyvm", "{{.Name}}", "--audio", "none"],
+		["modifyvm", "{{.Name}}", "--memory", "2048"],
+	    	["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "0", "--device", "0", "--type", "hdd", "--medium", "2tb_drive.vdi"],
+	    	["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "1", "--device", "0", "--type", "hdd", "--medium", "1tb_drive.vdi"],
+	    	["storageattach", "{{.Name}}", "--storagectl", "SATA", "--port", "2", "--device", "0", "--type", "hdd", "--medium", "500g_drive.vdi"]
+	    ]
+	}
+    ],
+    "provisioners": [
+	{
+	    "type": "shell",
+	    "script": "update_packages_reboot.sh",
+	    "pause_before": "10s"
+	},
+	{
+	    "type": "shell",
+	    "script": "install.sh",
+	    "pause_before": "40s"
+	}
+    ],
+    "post-processors": [ "vagrant" ]
+}
