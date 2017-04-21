@@ -8,7 +8,7 @@ vagrant_sudo "yum install -y -v perl gcc wget kernel-devel-$(uname -r) kernel-he
 vagrant_sudo "mount -o loop /home/vagrant/VBoxGuestAdditions.iso /mnt"
 vagrant_sudo "/mnt/VBoxLinuxAdditions.run --nox11"
 vagrant_sudo "umount /mnt"
-vagrant_sudo "yum remove -y kernel-headers-$(uname -r) kernel-devel-$(uname -r) kernel rsyslog"
+vagrant_sudo "yum remove -y kernel-headers-$(uname -r) kernel-devel-$(uname -r) kernel"
 mkdir ~vagrant/.ssh
 chmod 700 ~vagrant/.ssh
 cd ~vagrant/.ssh
