@@ -41,6 +41,5 @@
 	    "script": "install.sh",
 	    "pause_before": "40s"
 	}
-    ],
-    "post-processors": [ "vagrant" ]
+    ]
 }
